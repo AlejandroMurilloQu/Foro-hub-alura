@@ -1,10 +1,12 @@
 package com.alura.foroHub.infra.errores;
 
+import com.alura.foroHub.domain.TokenException;
 import com.alura.foroHub.domain.ValidacionException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -40,6 +42,16 @@ public class TratadorErrores {
 
         var errores = e.getFieldErrors().stream().map(DatosErrorValidacion::new).toList();
         return ResponseEntity.badRequest().body(new ResponseValidacionError("Los datos enviados son incorrectos", errores));
+    }
+
+    @ExceptionHandler(TokenException.class)
+    public ResponseEntity<Map<String, String>> handleNoToken(TokenException e){
+        return ResponseEntity.status(403).body(Map.of("Error", e.getMessage()));
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<Map<String, String>> handleTokenInvalido(BadCredentialsException e){
+        return ResponseEntity.status(403).body(Map.of("Error", "Fallo el inicio de sesión"));
     }
 
     @ExceptionHandler(ValidacionException.class)
