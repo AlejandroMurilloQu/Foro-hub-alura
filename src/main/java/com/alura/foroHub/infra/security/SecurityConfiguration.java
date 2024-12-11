@@ -33,7 +33,7 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(a -> a.requestMatchers(HttpMethod.POST, "/login").permitAll().anyRequest().authenticated())
+                .authorizeHttpRequests(a -> a.requestMatchers(HttpMethod.POST, "/login").permitAll().requestMatchers(HttpMethod.POST, "/usuarios").permitAll().anyRequest().authenticated())
                 .addFilterAfter(securityFilter, ExceptionTranslationFilter.class)
                 .exceptionHandling(handler -> handler.authenticationEntryPoint(jwtEntryPoint).accessDeniedHandler(accessDeniedHandler))
                 .build();
