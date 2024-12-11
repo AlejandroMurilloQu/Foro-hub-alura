@@ -1,4 +1,6 @@
 package com.alura.foroHub.domain.respuestas;
 
-public record CreateRespuestaDTO(String mensaje) {
+import jakarta.validation.constraints.NotBlank;
+
+public record CreateRespuestaDTO(@NotBlank String mensaje) {
 }

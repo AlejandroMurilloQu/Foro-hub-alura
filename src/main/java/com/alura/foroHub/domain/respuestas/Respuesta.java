@@ -1,12 +1,10 @@
 package com.alura.foroHub.domain.respuestas;
 
 import com.alura.foroHub.domain.topicos.Topico;
+import com.alura.foroHub.domain.usuarios.CreateUsuarioDTO;
 import com.alura.foroHub.domain.usuarios.Usuario;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -16,6 +14,8 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Setter
+@ToString
 @EqualsAndHashCode(of = "id")
 public class Respuesta {
     @Id
@@ -24,13 +24,22 @@ public class Respuesta {
 
     private String mensaje;
 
-    @ManyToOne
-    private Topico topico;
+    @Column(name = "topico")
+    private Long topico;
 
+    @Column(name = "fechacreacion")
     private LocalDateTime fechaCreacion;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Usuario autor;
+    @Column(name = "autor")
+    private Long autor;
 
     private String solucion;
+
+
+    public Respuesta(Long topico, Long usuario, CreateRespuestaDTO datos) {
+        this.mensaje = datos.mensaje();
+        this.topico = topico;
+        this.autor = usuario;
+        this.fechaCreacion = LocalDateTime.now();
+    }
 }

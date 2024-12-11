@@ -38,9 +38,6 @@ public class Usuario implements UserDetails {
 
     private String contrasena;
 
-    @OneToMany(mappedBy = "autor")
-    @Transient
-    private List<Respuesta> respuestas;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "perfil_usuario", joinColumns = @JoinColumn(name = "id_perfil"), inverseJoinColumns = @JoinColumn(name = "id_usuario"))
