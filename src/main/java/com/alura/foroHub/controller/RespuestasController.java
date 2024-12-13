@@ -75,7 +75,7 @@ public class RespuestasController {
     @GetMapping("/user/{id}")
     @Transactional
     @Operation(summary = "Obtener las respuestas de un usuario")
-    public ResponseEntity<Page<RespuestaResponseDTO>> getRespuestasByUser(@PathVariable @Parameter(name = "id", description = "Id del usuario") Long id, @PageableDefault(size = 10, sort = "fechaCreacion", direction = Sort.Direction.DESC) @Parameter(hidden = true) Pageable pageable){
+    public ResponseEntity<Page<RespuestaResponseDTO>> getRespuestasByUser(@PathVariable @Parameter(name = "id", description = "Id del usuario") Long id, @PageableDefault(size = 10, sort = "fechaCreacion", direction = Sort.Direction.DESC) @Parameter(hidden = true)  Pageable pageable){
         Page<RespuestaResponseDTO> respuestas = service.obtenerRespuestasByUser(id, pageable).map(RespuestaResponseDTO::new);
         return ResponseEntity.ok(respuestas);
     }
