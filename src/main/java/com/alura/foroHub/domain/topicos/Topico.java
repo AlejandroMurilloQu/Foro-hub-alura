@@ -18,7 +18,6 @@ import java.util.List;
 @EqualsAndHashCode(of = "id")
 public class Topico {
 
-    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
